@@ -1,7 +1,9 @@
 (function () {
   const templateString = `<div>
+    <slot name="header"></slot>
     <div id="element-value"></div>
     <button id="increment-btn">Increment</button>
+    <slot name="footer"></slot>
   </div>`;
   const template = utils.createTemplate(templateString);
 

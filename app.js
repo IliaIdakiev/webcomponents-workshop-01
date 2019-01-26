@@ -1,7 +1,10 @@
 (function () {
   const templateString = `<div>
     <button id="reset-btn">Reset</button>
-    <hg-element></hg-element>
+    <hg-element>
+      <div id="test" slot="header">My Counter Title</div>
+      <div id="footer" slot="footer">My Counter Footer</div>
+    </hg-element>
   </div>`;
 
   const template = utils.createTemplate(templateString);
@@ -17,6 +20,11 @@
       this.counterElement = this.shadowRoot.querySelector('hg-element');
       this.resetBtnElement = this.shadowRoot.getElementById('reset-btn');
       this.counterElement.setAttribute('value', this.counter);
+
+      const test = this.shadowRoot.getElementById('test');
+      test.addEventListener('click', function () {
+        console.log(123);
+      });
 
       this.resetBtnClickHandler = this.resetBtnClickHandler.bind(this);
       this.updateCounterValue = this.updateCounterValue.bind(this);
