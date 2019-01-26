@@ -8,7 +8,7 @@
   class Element extends HTMLElement {
 
     get currentValue() {
-      return this.valueElement.innerHTML;
+      return +this.valueElement.innerHTML;
     }
 
     set currentValue(newValue) {
@@ -17,13 +17,14 @@
 
     constructor() {
       super();
-      this.counter = 0;
+      this.currentValue = 0;
+
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.appendChild(template.content.cloneNode(true));
 
       this.valueElement = this.shadowRoot.getElementById('element-value');
       this.incrementBtnElement = this.shadowRoot.getElementById('increment-btn');
-      this.currentValue = this.counter;
+
       this.incrementCounter = this.incrementCounter.bind(this);
     }
 
