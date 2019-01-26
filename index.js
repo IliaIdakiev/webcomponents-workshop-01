@@ -6,6 +6,15 @@
   const template = utils.createTemplate(templateString);
 
   class Element extends HTMLElement {
+
+    get currentValue() {
+      return this.valueElement.innerHTML;
+    }
+
+    set currentValue(newValue) {
+      this.valueElement.innerHTML = newValue;
+    }
+
     constructor() {
       super();
       this.counter = 0;
@@ -14,13 +23,32 @@
 
       this.valueElement = this.shadowRoot.getElementById('element-value');
       this.incrementBtnElement = this.shadowRoot.getElementById('increment-btn');
+      this.currentValue = this.counter;
+      this.incrementCounter = this.incrementCounter.bind(this);
+    }
 
-      this.valueElement.innerHTML = this.counter;
-      this.incrementBtnElement.addEventListener('click', () => {
-        this.valueElement.innerHTML = ++this.counter;
-      });
+    incrementCounter() {
+      this.currentValue++;
+    }
+
+    connectedCallback() {
+      this.incrementBtnElement.addEventListener('click', this.incrementCounter);
+    }
+
+    disconnectedCallback() {
+      this.incrementBtnElement.removeEventListener('click', this.incrementCounter);
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (name !== 'value') { return; }
+      this.currentValue = +newValue;
+    }
+
+    static get observedAttributes() {
+      return ['value'];
     }
   }
 
   customElements.define('hg-element', Element);
-}())
+}());
+
