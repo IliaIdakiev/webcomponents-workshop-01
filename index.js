@@ -17,13 +17,14 @@
 
     constructor() {
       super();
-      this.currentValue = 0;
 
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.appendChild(template.content.cloneNode(true));
 
       this.valueElement = this.shadowRoot.getElementById('element-value');
       this.incrementBtnElement = this.shadowRoot.getElementById('increment-btn');
+
+      this.currentValue = 0;
 
       this.incrementCounter = this.incrementCounter.bind(this);
     }
